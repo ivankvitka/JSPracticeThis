@@ -130,8 +130,12 @@ user2.checkPasswordBind();
   function insertSlide(obj, position) {
     if (position < 0) {
       imgArr.unshift(obj);
+      currentSlide++;
     }
-    else {
+    else if (position < currentSlide) {
+      imgArr.splice(position, 0, obj);
+      currentSlide++;
+    } else {
       imgArr.splice(position, 0, obj);
     }
   }
@@ -140,11 +144,17 @@ user2.checkPasswordBind();
     if (imgArr.indexOf(position) === -1) {
       if (position < 0) {
         imgArr.shift();
+        currentSlide--;
       } else {
         imgArr.pop();
       }
     } else {
-      imgArr.splice(position, 1);
+      if (position < currentSlide) {
+        imgArr.splice(position, 1);
+        currentSlide--;
+      } else {
+        imgArr.splice(position, 1);
+      }
     }
   }
 }());
@@ -170,11 +180,11 @@ function Car(brand, year, mileage, color) {
   this.isMoving = false;
   this.isContainerFull = false;
 
-  this.fullFuelContainer = function () {
+  this.fullFuelContainer = function() {
     this.isContainerFull = true;
   };
 
-  this.startMotor = function () {
+  this.startMotor = function() {
     if (this.isContainerFull) {
       this.isMotorStarted = true;
     } else {
@@ -182,11 +192,11 @@ function Car(brand, year, mileage, color) {
     }
   };
 
-  this.stopMotor = function () {
+  this.stopMotor = function() {
     this.isMotorStarted = false;
   };
 
-  this.startMoving = function () {
+  this.startMoving = function() {
     if (this.isMotorStarted) {
       this.isMoving = true;
       console.log("Машина " + this.brand + " марки " + this.color + " цвета поехала!")
@@ -196,7 +206,7 @@ function Car(brand, year, mileage, color) {
     }
   };
 
-  this.stopMoving = function () {
+  this.stopMoving = function() {
     if (!this.isMotorStarted) {
       console.log("Зажигание и так выключено");
     } else {
