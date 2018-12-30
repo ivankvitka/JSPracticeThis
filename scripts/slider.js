@@ -1,5 +1,5 @@
 //task #6
-(function() {
+;(function() {
   var imgArr = [{image: 'car.jpg', alt: 'Car'}, {image: 'apple.jpg', alt: 'Apple'}];
   var currentSlide = 0;
 
@@ -13,11 +13,12 @@
   showCurrentSlide();
   showNthSlide(-1);
   showCurrentSlide();
-  showNthSlide(-1);
-  showCurrentSlide();
   insertSlide({image: 'something.jpg', alt: 'Something'}, 5);
   console.log(imgArr);
-  deleteSlide(2);
+  showNthSlide(0);
+  showCurrentSlide();
+  deleteSlide(0);
+  showCurrentSlide();
   console.log(imgArr);
 
   function showNextSlide() {
@@ -70,19 +71,27 @@
   }
 
   function deleteSlide(position) {
-    if (imgArr.indexOf(position) === -1) {
-      if (position < 0) {
+    if (position < 0) {
+      if (currentSlide > 0) {
         imgArr.shift();
         currentSlide--;
       } else {
-        imgArr.pop();
+        imgArr.shift();
       }
+    } else if (position > imgArr.length - 1) {
+      imgArr.pop();
     } else {
-      if (position < currentSlide) {
+      console.log('second');
+      if (position < currentSlide && currentSlide > 0) {
         imgArr.splice(position, 1);
         currentSlide--;
       } else {
-        imgArr.splice(position, 1);
+        if (currentSlide === imgArr.length - 1) {
+          imgArr.splice(position, 1);
+          currentSlide--;
+        } else {
+          imgArr.splice(position, 1);
+        }
       }
     }
   }
